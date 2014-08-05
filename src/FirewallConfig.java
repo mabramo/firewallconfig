@@ -29,8 +29,8 @@ public class FirewallConfig
 		IPdst = InetAddress.getByName(dst);
 		port = prt;
 		
-		//THIS IS BAD -- Error check @ input later on
-		if(port < 0 || port > 65536)
+		//THIS IS BAD -- Error check @ input later on -- defaulting to 8080 is bad -- potential to be abused 
+		if(port < 0 && port > 65536)
 		{
 			System.out.println("Port out of range. Specify valid port number");
 			port = 8080;
@@ -50,18 +50,28 @@ public class FirewallConfig
 		return 0;
 	}
 
-	public int setSrcIP(String newIP)
+	public int setSrcIP(String newIP) throws UnknownHostException
 	{
+		IPsrc = InetAddress.getByName(newIP);
 		return 0;
 	}
 
-	public int setDstIP(String newIP)
+	public int setDstIP(String newIP) throws UnknownHostException
 	{
+		IPdst = InetAddress.getByName(newIP);
 		return 0;
 	}
 
 	public int setPort(int newPort)
 	{
+		if(newPort > 0 && newPort < 65536)
+		{
+			port = newPort;
+		}
+		else
+		{
+			return -1;
+		}
 		return 0;
 	}
 
