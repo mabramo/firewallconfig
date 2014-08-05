@@ -1,31 +1,41 @@
 import org.json.*;
 import java.util.ArrayList;
 import java.net.HttpURLConnection;
+import java.net.UnknownHostException;
 import java.lang.String;
+import java.net.InetAddress;
 
 public class FirewallConfig
 {
 
 	/* Variable Declaration */
-	private String IPsrc;
-	private String IPdst;
+	private InetAddress IPsrc;
+	private InetAddress IPdst;
 	private int port;
 	private JSONObject networkPath;
 	
 	/* Constructors */
 
-	FirewallConfig()
+	FirewallConfig() throws UnknownHostException
 	{
-		IPsrc = "127.0.0.1";
-		IPdst = "127.0.0.1";
+		IPsrc = InetAddress.getLocalHost();
+		IPdst = InetAddress.getLocalHost();
 		port = 8080;
 	}
 	
-	FirewallConfig(String src, String dst, int prt)
+	FirewallConfig(String src, String dst, int prt) throws UnknownHostException
 	{
-		IPsrc = src;
-		IPdst = dst;
+		IPsrc = InetAddress.getByName(src);
+		IPdst = InetAddress.getByName(dst);
 		port = prt;
+		
+		//THIS IS BAD -- Error check @ input later on
+		if(port < 0 || port > 65536)
+		{
+			System.out.println("Port out of range. Specify valid port number");
+			port = 8080;
+		}
+		
 	}
 	
 	/* Public Functions */
@@ -40,39 +50,39 @@ public class FirewallConfig
 		return 0;
 	}
 
-	public int setSrcIP()
+	public int setSrcIP(String newIP)
 	{
 		return 0;
 	}
 
-	public int setDstIP()
+	public int setDstIP(String newIP)
 	{
 		return 0;
 	}
 
-	public int setPort()
+	public int setPort(int newPort)
 	{
 		return 0;
 	}
 
-	public int getSrcIP()
+	public InetAddress getSrcIP()
 	{
-		return 0;
+		return IPsrc;
 	}
 
-	public int getDstIP()
+	public InetAddress getDstIP()
 	{
-		return 0;
+		return IPdst;
 	}
 
 	public int getPort()
 	{
-		return 0;
+		return port;
 	}
 
 	/* Private Functions */
 
-	private int getNetPath()
+	private int findNetPath()
 	{
 		return 0;
 	}
