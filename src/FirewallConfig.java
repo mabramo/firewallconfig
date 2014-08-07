@@ -10,11 +10,18 @@ import java.net.InetAddress;
 public class FirewallConfig
 {
 
-	/* Variable Declaration */
+	/* Variables */
 	private InetAddress IPsrc;
 	private InetAddress IPdst;
 	private int port;
 	private JSONObject networkPath;
+	
+	/* Firewall Object */
+	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list
+	private class FirewallObj
+	{
+		private InetAddress ip;
+	}
 	
 	/* Constructors */
 
@@ -31,11 +38,9 @@ public class FirewallConfig
 		IPdst = InetAddress.getByName(dst);
 		port = prt;
 		
-		//THIS IS BAD -- Error check @ input later on -- defaulting to 8080 is bad -- potential to be abused -- constructor shouldn't need output
 		if(port < 0 && port > 65536)
 		{
-			System.out.println("Port out of range. Specify valid port number");
-			port = 8080;
+			throw new IllegalArgumentException("invalid port: " + port);
 		}
 		
 	}
@@ -47,7 +52,7 @@ public class FirewallConfig
 	 * 	pre:
 	 * 	post:
 	 */
-	public int main()
+	public static int main(String[] args)
 	{
 		return 0;
 	}
