@@ -21,7 +21,13 @@ public class FirewallConfig
 	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list. But I can do that with IPs. Do this if obj has multiple members
 	private class FirewallObj
 	{
-		private InetAddress ip;
+		InetAddress IPsrc;
+		InetAddress IPdst;
+		int port; //needed?
+		int dropNum; //Rule number that issues an Action=Drop on the connection. All other rules come before this rule.
+		String namePolicy;
+		String nameInterfaceSrc;
+		String nameInterfaceDst;		
 	}
 	
 	/* Constructors */
@@ -117,7 +123,7 @@ public class FirewallConfig
 
 	/*
 	 * 	getSrcIP
-	 * 	pre: None
+	 * 	pre: No arguments
 	 * 	post: Returns source IP as InetAddress object
 	 */
 	public InetAddress getSrcIP()
@@ -127,7 +133,7 @@ public class FirewallConfig
 
 	/*
 	 * 	getDstIP
-	 * 	pre: None
+	 * 	pre: No arguments
 	 * 	post: Returns destination IP as InetAddress object
 	 */
 	public InetAddress getDstIP()
@@ -137,7 +143,7 @@ public class FirewallConfig
 
 	/*
 	 * 	getPort
-	 * 	pre: None
+	 * 	pre: No arguments
 	 * 	post: Returns port number as integer
 	 */
 	public int getPort()
@@ -149,17 +155,18 @@ public class FirewallConfig
 	
 	/*
 	 * 	testPath
-	 * 	pre: None
+	 * 	pre: No arguments
 	 * 	post: Tests if path from SRC to DST exists on PORT and tests if a policy exists already.
 	 */
 	private boolean testPath()
 	{
+		//Run a policy test
 		return false;
 	}
 
 	private int findNetPath()
 	{
-		//uses Recommended Report
+		//Run Recommended Report
 		return 0;
 	}
 	
