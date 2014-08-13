@@ -1,6 +1,6 @@
 import org.json.*;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
 import java.io.IOException;
@@ -14,10 +14,11 @@ public class FirewallConfig
 	private InetAddress IPsrc;
 	private InetAddress IPdst;
 	private int port;
+	private LinkedList<FirewallObj> listFirewalls;
 	private JSONObject networkPath;
 	
 	/* Firewall Object */
-	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list
+	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list. But I can do that with IPs. Do this if obj has multiple members
 	private class FirewallObj
 	{
 		private InetAddress ip;
@@ -54,6 +55,23 @@ public class FirewallConfig
 	 */
 	public static int main(String[] args)
 	{
+		if(args.length < 3)
+		{
+			System.out.println("Invalid arguments");
+		}
+		try
+		{
+			FirewallConfig master = new FirewallConfig(args[0], args[1], Integer.parseInt(args[2]));
+		} catch (NumberFormatException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 
@@ -128,9 +146,20 @@ public class FirewallConfig
 	}
 
 	/* Private Functions */
+	
+	/*
+	 * 	testPath
+	 * 	pre: None
+	 * 	post: Tests if path from SRC to DST exists on PORT and tests if a policy exists already.
+	 */
+	private boolean testPath()
+	{
+		return false;
+	}
 
 	private int findNetPath()
 	{
+		//uses Recommended Report
 		return 0;
 	}
 	
