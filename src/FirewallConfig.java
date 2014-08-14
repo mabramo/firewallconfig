@@ -1,11 +1,13 @@
 import org.json.*;
 
 import java.util.LinkedList;
-import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
 import java.io.IOException;
 import java.lang.String;
 import java.net.InetAddress;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 public class FirewallConfig
 {
@@ -16,6 +18,9 @@ public class FirewallConfig
 	private int port;
 	private LinkedList<FirewallObj> listFirewalls;
 	private JSONObject networkPath;
+	private final String API_URL = "https://10.30.100.210/firemon/api/1.0/";
+	
+	private HttpsURLConnection url;
 	
 	/* Firewall Object */
 	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list. But I can do that with IPs. Do this if obj has multiple members
@@ -27,7 +32,7 @@ public class FirewallConfig
 		int dropNum; //Rule number that issues an Action=Drop on the connection. All other rules come before this rule.
 		String namePolicy;
 		String nameInterfaceSrc;
-		String nameInterfaceDst;		
+		String nameInterfaceDst;
 	}
 	
 	/* Constructors */
