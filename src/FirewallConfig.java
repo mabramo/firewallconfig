@@ -23,12 +23,11 @@ public class FirewallConfig
 	private HttpsURLConnection url;
 	
 	/* Firewall Object */
-	//Is this needed? Does it make sense? I can push a network path of FirewallObjs to a list. But I can do that with IPs. Do this if obj has multiple members
 	private class FirewallObj
 	{
 		InetAddress IPsrc;
 		InetAddress IPdst;
-		int port; //needed?
+		int port; // TODO needed?
 		int dropNum; //Rule number that issues an Action=Drop on the connection. All other rules come before this rule.
 		String namePolicy;
 		String nameInterfaceSrc;
