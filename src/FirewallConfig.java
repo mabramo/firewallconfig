@@ -20,6 +20,9 @@ public class FirewallConfig
 	private JSONObject networkPath;
 	private final String API_URL = "https://10.30.100.210/firemon/api/1.0/";
 	
+	//TODO Change this variable name -- should this even be static? Do I even need this object?
+	private static FirewallConfig master;
+	
 	private HttpsURLConnection url;
 	
 	/* Firewall Object */
@@ -65,13 +68,16 @@ public class FirewallConfig
 	 */
 	public static int main(String[] args)
 	{
+		//Validity Check
 		if(args.length < 3)
 		{
 			System.out.println("Invalid arguments");
 		}
+		
+		//Initialize Class + Parameters
 		try
 		{
-			FirewallConfig master = new FirewallConfig(args[0], args[1], Integer.parseInt(args[2]));
+			master = new FirewallConfig(args[0], args[1], Integer.parseInt(args[2]));
 		} catch (NumberFormatException e)
 		{
 			// TODO Auto-generated catch block
@@ -81,6 +87,17 @@ public class FirewallConfig
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//Check if path is good
+		if(master.testPath() == true)
+		{
+			//if so, run the firemon recommended report
+			//print the results to a log
+			master.findNetPath();
+		}
+		
+		//next step is to prompt user to confirm whether to make changes.
+		//If yes, signal firemon to implement the rule
 		
 		return 0;
 	}
